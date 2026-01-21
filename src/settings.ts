@@ -224,13 +224,18 @@ tags:
 `,
 		posts: `---
 title: "{{title}}"
-date: {{date_iso}}
-excerpt: ""
+created: {{date_iso}}
+modified: {{date_iso}}
+status: draft
+categories:
+  - "[[Blog]]"
 tags:
   - blog
 author: ""
-status: draft
-created: {{date_iso}}
+excerpt: ""
+featured_image: ""
+scheduled_date:
+published_date:
 ---
 # {{title}}
 
@@ -252,15 +257,13 @@ created: {{date_iso}}
 
 
 
-## Meta
-- **Kategori**:
-- **Target pembaca**:
-- **Kata kunci**:
+## Referensi
+-
 
 ## Checklist Publikasi
 - [ ] Judul menarik
 - [ ] Thumbnail/gambar utama
-- [ ] SEO meta description
+- [ ] Meta description
 - [ ] Proofreading selesai
 - [ ] Link internal/eksternal
 
@@ -480,13 +483,18 @@ tags:
 `,
 		posts: `---
 title: "{{title}}"
-date: {{date_iso}}
-excerpt: ""
+created: {{date_iso}}
+modified: {{date_iso}}
+status: draft
+categories:
+  - "[[Blog]]"
 tags:
   - blog
 author: ""
-status: draft
-created: {{date_iso}}
+excerpt: ""
+featured_image: ""
+scheduled_date:
+published_date:
 ---
 # {{title}}
 
@@ -508,10 +516,8 @@ created: {{date_iso}}
 
 
 
-## Meta
-- **Category**:
-- **Target audience**:
-- **Keywords**:
+## References
+-
 
 ## Publication Checklist
 - [ ] Catchy title

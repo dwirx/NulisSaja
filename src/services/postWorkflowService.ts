@@ -46,13 +46,30 @@ export class PostWorkflowService {
 		}
 	}
 
+	private getCurrentDateISO(): string {
+		return new Date().toISOString().split('T')[0];
+	}
+
 	async movePostToStatus(file: TFile, newStatus: PostStatus): Promise<void> {
 		const targetFolder = this.getFolderForStatus(newStatus);
 		await this.ensureFolderExists(targetFolder);
 
-		// Update frontmatter status
+		const currentDate = this.getCurrentDateISO();
+
+		// Update frontmatter with status and dates
 		await this.plugin.app.fileManager.processFrontMatter(file, (frontmatter) => {
 			frontmatter.status = newStatus;
+			frontmatter.modified = currentDate;
+
+			// Set scheduled_date when moving to scheduled
+			if (newStatus === 'scheduled' && !frontmatter.scheduled_date) {
+				frontmatter.scheduled_date = currentDate;
+			}
+
+			// Set published_date when moving to published
+			if (newStatus === 'published' && !frontmatter.published_date) {
+				frontmatter.published_date = currentDate;
+			}
 		});
 
 		// Move file to new folder

@@ -181,6 +181,10 @@ export class PostStatusBar {
 		`;
 	}
 
+	private getCurrentDateISO(): string {
+		return new Date().toISOString().split('T')[0];
+	}
+
 	private async changeStatus(newStatus: PostStatus): Promise<void> {
 		if (!this.currentFile) return;
 
@@ -190,9 +194,22 @@ export class PostStatusBar {
 		// Get target folder
 		const targetFolder = this.getFolderForStatus(newStatus, folders);
 
-		// Update frontmatter
+		const currentDate = this.getCurrentDateISO();
+
+		// Update frontmatter with status and dates
 		await this.plugin.app.fileManager.processFrontMatter(file, (frontmatter) => {
 			frontmatter.status = newStatus;
+			frontmatter.modified = currentDate;
+
+			// Set scheduled_date when moving to scheduled
+			if (newStatus === 'scheduled' && !frontmatter.scheduled_date) {
+				frontmatter.scheduled_date = currentDate;
+			}
+
+			// Set published_date when moving to published
+			if (newStatus === 'published' && !frontmatter.published_date) {
+				frontmatter.published_date = currentDate;
+			}
 		});
 
 		// Move file to new folder if needed
