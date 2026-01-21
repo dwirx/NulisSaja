@@ -141,5 +141,21 @@ export const NOTE_DEFINITIONS: NoteCommandDefinition[] = [
 			placeholder: 'Ide atomic apa yang ingin Anda tangkap?',
 			cancelNotice: '❌ Pembuatan catatan ide dibatalkan - tidak ada judul'
 		}
+	},
+	{
+		type: 'posts',
+		commandId: 'create-post',
+		commandName: '✍️ Buat Blog Post',
+		icon: '✍️',
+		menuLabel: 'Blog Post',
+		menuDescription: 'Tulis artikel blog',
+		loadingMessage: '⏳ Membuat post...',
+		successMessage: '✅ Post berhasil dibuat!',
+		errorMessagePrefix: '❌ Error membuat post: ',
+		prompt: {
+			title: 'Blog Post',
+			placeholder: 'Judul artikel blog...',
+			cancelNotice: '❌ Pembuatan post dibatalkan - tidak ada judul'
+		}
 	}
 ];

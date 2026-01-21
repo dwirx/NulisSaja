@@ -9,7 +9,17 @@ export type NoteType =
 	| 'areas'
 	| 'resources'
 	| 'ideas'
-	| 'journal';
+	| 'journal'
+	| 'posts';
+
+export type PostStatus = 'draft' | 'editing' | 'scheduled' | 'published';
+
+export interface PostWorkflowFolders {
+	drafts: string;
+	editing: string;
+	scheduled: string;
+	published: string;
+}
 
 export type TemplateLanguage = 'id' | 'en';
 
@@ -46,6 +56,8 @@ export interface NulisajaPluginSettings {
 	// Quick Menu settings
 	quickMenuMode?: 'auto' | 'command-palette' | 'bottom-sheet';
 	quickMenuVisibility?: Record<string, boolean>;
+	// Posts workflow settings
+	postWorkflowFolders: PostWorkflowFolders;
 }
 
 export interface NotePlugin extends Plugin {

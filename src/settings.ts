@@ -219,7 +219,43 @@ tags:
 - **Prioritas**: 
 
 ## 🙏 Rasa Syukur
-- 
+-
+
+`,
+		posts: `---
+created: {{date_iso}}
+status: draft
+tags:
+  - blog
+  - post
+---
+# ✍️ {{title}}
+
+## 📝 Ringkasan
+> Tulis ringkasan singkat artikel di sini...
+
+## 📖 Konten
+
+### Pendahuluan
+
+
+### Isi Utama
+
+
+### Kesimpulan
+
+
+## 🏷️ Meta
+- **Kategori**:
+- **Target pembaca**:
+- **Kata kunci**:
+
+## 📋 Checklist Publikasi
+- [ ] Judul menarik
+- [ ] Thumbnail/gambar utama
+- [ ] SEO meta description
+- [ ] Proofreading selesai
+- [ ] Link internal/eksternal
 
 `
 	},
@@ -432,7 +468,43 @@ tags:
 - **Priorities**: 
 
 ## 🙏 Gratitude
-- 
+-
+
+`,
+		posts: `---
+created: {{date_iso}}
+status: draft
+tags:
+  - blog
+  - post
+---
+# ✍️ {{title}}
+
+## 📝 Summary
+> Write a brief summary of the article here...
+
+## 📖 Content
+
+### Introduction
+
+
+### Main Content
+
+
+### Conclusion
+
+
+## 🏷️ Meta
+- **Category**:
+- **Target audience**:
+- **Keywords**:
+
+## 📋 Publication Checklist
+- [ ] Catchy title
+- [ ] Thumbnail/featured image
+- [ ] SEO meta description
+- [ ] Proofreading complete
+- [ ] Internal/external links
 
 `
 	}
@@ -601,7 +673,8 @@ export const DEFAULT_SETTINGS: NulisajaPluginSettings = {
 		areas: 'AREAS',
 		resources: 'RESOURCES',
 		ideas: 'IDEAS',
-		journal: 'journal'
+		journal: 'journal',
+		posts: 'Posts/Drafts'
 	},
 	templates: cloneTemplates('id'),
 	autoCreateFolders: true,
@@ -623,7 +696,13 @@ export const DEFAULT_SETTINGS: NulisajaPluginSettings = {
 		id: 'DD MMM YYYY',
 		en: 'YYYY-MM-DD'
 	},
-	hotkeys: {}
+	hotkeys: {},
+	postWorkflowFolders: {
+		drafts: 'Posts/Drafts',
+		editing: 'Posts/Editing',
+		scheduled: 'Posts/Scheduled',
+		published: 'Posts/Published'
+	}
 };
 
 export async function loadSettings(plugin: Plugin): Promise<NulisajaPluginSettings> {

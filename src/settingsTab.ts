@@ -90,6 +90,17 @@ const FOLDER_SECTIONS: SectionConfig<FolderField>[] = [
 				placeholder: 'IDEAS'
 			}
 		]
+	},
+	{
+		title: '✍️ Blog System',
+		items: [
+			{
+				key: 'posts',
+				name: '✍️ Posts folder',
+				desc: 'Default folder for new blog posts (drafts)',
+				placeholder: 'Posts/Drafts'
+			}
+		]
 	}
 ];
 
@@ -162,6 +173,17 @@ const TEMPLATE_SECTIONS: SectionConfig<TemplateField>[] = [
 				placeholder: 'Enter journal template...'
 			}
 		]
+	},
+	{
+		title: '✍️ Blog Templates',
+		items: [
+			{
+				key: 'posts',
+				name: '✍️ Posts template',
+				desc: 'Template for blog posts',
+				placeholder: 'Enter posts template...'
+			}
+		]
 	}
 ];
 
@@ -174,7 +196,8 @@ const DEFAULT_FOLDER_OPTIONS: Array<{ key: NoteType; label: string }> = [
 	{ key: 'projects', label: '🚀 Projects' },
 	{ key: 'areas', label: '🎯 Areas' },
 	{ key: 'resources', label: '📚 Resources' },
-	{ key: 'ideas', label: '💭 Ideas' }
+	{ key: 'ideas', label: '💭 Ideas' },
+	{ key: 'posts', label: '✍️ Posts' }
 ];
 
 const FILENAME_OPTIONS: Array<{ key: 'hyphenated' | 'original' | 'clean'; label: string }> = [
@@ -197,7 +220,8 @@ const NOTE_TYPE_LIST: NoteType[] = [
 	'areas',
 	'resources',
 	'ideas',
-	'journal'
+	'journal',
+	'posts'
 ];
 
 const NOTE_TYPE_LABEL: Record<NoteType, string> = NOTE_DEFINITIONS.reduce((map, def) => {
@@ -223,6 +247,7 @@ export class NulisajaSettingTab extends PluginSettingTab {
 		header.createEl('p', { text: 'Configure your note creation experience' });
 
 		this.renderFolderSettings(containerEl);
+		this.renderPostWorkflowSettings(containerEl);
 		this.renderTemplateSettings(containerEl);
 		this.renderQuickMenuSettings(containerEl);
 		this.renderGeneralSettings(containerEl);
@@ -243,6 +268,53 @@ export class NulisajaSettingTab extends PluginSettingTab {
 					);
 				this.renderFolderAliasControls(containerEl, item.key);
 			});
+		});
+	}
+
+	private renderPostWorkflowSettings(containerEl: HTMLElement): void {
+		const language = this.currentLanguage;
+		containerEl.createEl('h2', { text: language === 'id' ? '✍️ Workflow Blog Post' : '✍️ Blog Post Workflow' });
+
+		const workflowFolders = [
+			{
+				key: 'drafts' as const,
+				name: language === 'id' ? '📝 Folder Draft' : '📝 Drafts Folder',
+				desc: language === 'id' ? 'Folder untuk post yang sedang ditulis' : 'Folder for posts being written',
+				placeholder: 'Posts/Drafts'
+			},
+			{
+				key: 'editing' as const,
+				name: language === 'id' ? '✏️ Folder Editing' : '✏️ Editing Folder',
+				desc: language === 'id' ? 'Folder untuk post yang sedang diedit' : 'Folder for posts being edited',
+				placeholder: 'Posts/Editing'
+			},
+			{
+				key: 'scheduled' as const,
+				name: language === 'id' ? '📅 Folder Scheduled' : '📅 Scheduled Folder',
+				desc: language === 'id' ? 'Folder untuk post yang dijadwalkan' : 'Folder for scheduled posts',
+				placeholder: 'Posts/Scheduled'
+			},
+			{
+				key: 'published' as const,
+				name: language === 'id' ? '✅ Folder Published' : '✅ Published Folder',
+				desc: language === 'id' ? 'Folder untuk post yang sudah dipublikasi' : 'Folder for published posts',
+				placeholder: 'Posts/Published'
+			}
+		];
+
+		workflowFolders.forEach((item) => {
+			new Setting(containerEl)
+				.setName(item.name)
+				.setDesc(item.desc)
+				.addText((text: TextComponent) =>
+					text
+						.setPlaceholder(item.placeholder)
+						.setValue(this.plugin.settings.postWorkflowFolders[item.key])
+						.onChange(async (value) => {
+							this.plugin.settings.postWorkflowFolders[item.key] = value;
+							await this.plugin.saveSettings();
+						})
+				);
 		});
 	}
 
@@ -716,7 +788,8 @@ export class NulisajaSettingTab extends PluginSettingTab {
 				areas: 'Area Tanggung Jawab',
 				resources: 'Referensi Favorit',
 				ideas: 'Ide Zettelkasten',
-				journal: 'Jurnal Malam'
+				journal: 'Jurnal Malam',
+				posts: 'Artikel Blog'
 			},
 			en: {
 				daily: 'Daily Note',
@@ -727,7 +800,8 @@ export class NulisajaSettingTab extends PluginSettingTab {
 				areas: 'Responsibility Area',
 				resources: 'Resource Highlight',
 				ideas: 'Zettelkasten Idea',
-				journal: 'Evening Journal'
+				journal: 'Evening Journal',
+				posts: 'Blog Article'
 			}
 		};
 		return samples[language]?.[noteType] ?? 'Sample Title';

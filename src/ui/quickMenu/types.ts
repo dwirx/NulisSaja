@@ -40,7 +40,8 @@ export const DEFAULT_CATEGORIES: QuickMenuCategory[] = [
 	{ id: 'harian', name: 'Harian', icon: '📆', order: 0 },
 	{ id: 'capture', name: 'Capture', icon: '💡', order: 1 },
 	{ id: 'knowledge', name: 'Knowledge', icon: '🧠', order: 2 },
-	{ id: 'para', name: 'PARA', icon: '📁', order: 3 }
+	{ id: 'para', name: 'PARA', icon: '📁', order: 3 },
+	{ id: 'blog', name: 'Blog', icon: '✍️', order: 4 }
 ];
 
 export const NOTE_TYPE_TO_CATEGORY: Record<NoteType, string> = {
@@ -52,5 +53,6 @@ export const NOTE_TYPE_TO_CATEGORY: Record<NoteType, string> = {
 	knowledge: 'knowledge',
 	resources: 'para',
 	projects: 'para',
-	areas: 'para'
+	areas: 'para',
+	posts: 'blog'
 };
