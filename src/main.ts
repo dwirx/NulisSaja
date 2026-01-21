@@ -1,4 +1,4 @@
-import { Notice, Plugin } from 'obsidian';
+import { Menu, Notice, Plugin, TFile } from 'obsidian';
 import { NOTE_DEFINITIONS } from './commands/noteDefinitions';
 import { createQuickMenuItems, runNoteAction } from './commands/noteRunner';
 import { registerNoteCommands } from './commands/registerCommands';
@@ -10,12 +10,14 @@ import { injectStyles, removeStyles } from './styles';
 import type { NoteCommandDefinition, NulisajaPluginSettings } from './types';
 import type { QuickMenuCategory, QuickMenuItem } from './ui/quickMenu/index';
 import { getDefaultCategories, showQuickMenu } from './ui/quickMenu/index';
+import { PostStatusBar } from './ui/postStatusBar';
 
 export default class NulisajaPlugin extends Plugin {
 	settings: NulisajaPluginSettings;
 
 	private noteService!: NoteService;
 	private postWorkflowService!: PostWorkflowService;
+	private postStatusBar!: PostStatusBar;
 	private quickMenuItems: QuickMenuItem[] = [];
 	private quickMenuCategories: QuickMenuCategory[] = [];
 
@@ -25,6 +27,7 @@ export default class NulisajaPlugin extends Plugin {
 		this.settings = await loadSettings(this);
 		this.noteService = new NoteService(this);
 		this.postWorkflowService = new PostWorkflowService(this);
+		this.postStatusBar = new PostStatusBar(this);
 		this.quickMenuItems = createQuickMenuItems(this, this.noteService, NOTE_DEFINITIONS);
 		this.quickMenuCategories = getDefaultCategories();
 
@@ -45,6 +48,12 @@ export default class NulisajaPlugin extends Plugin {
 		// Register post workflow commands
 		this.registerPostWorkflowCommands();
 
+		// Register post status bar
+		this.postStatusBar.register();
+
+		// Register context menu for post files
+		this.registerPostContextMenu();
+
 		this.addSettingTab(new NulisajaSettingTab(this.app, this));
 
 		console.log('Nulisaja Plugin: Successfully loaded');
@@ -52,6 +61,7 @@ export default class NulisajaPlugin extends Plugin {
 	}
 
 	onunload(): void {
+		this.postStatusBar.unregister();
 		removeStyles();
 	}
 
@@ -108,5 +118,70 @@ export default class NulisajaPlugin extends Plugin {
 				void this.postWorkflowService.moveActivePostToStatus('draft');
 			}
 		});
+	}
+
+	private registerPostContextMenu(): void {
+		// Context menu for file explorer
+		this.registerEvent(
+			this.app.workspace.on('file-menu', (menu: Menu, file) => {
+				if (!(file instanceof TFile) || file.extension !== 'md') {
+					return;
+				}
+
+				// Check if file is in post folders
+				const folders = this.settings.postWorkflowFolders;
+				const postFolders = [folders.drafts, folders.editing, folders.scheduled, folders.published];
+				const isPostFile = postFolders.some(folder =>
+					file.path.startsWith(folder + '/') || file.path.startsWith(folder)
+				);
+
+				if (!isPostFile) {
+					// Also check posts folder
+					const postsFolder = this.settings.folders.posts;
+					if (!file.path.startsWith(postsFolder + '/') && !file.path.startsWith(postsFolder)) {
+						return;
+					}
+				}
+
+				menu.addSeparator();
+				menu.addItem((item) => {
+					item.setTitle('✍️ Post Workflow')
+						.setIcon('file-text')
+						.setSection('nulisaja');
+				});
+
+				menu.addItem((item) => {
+					item.setTitle('  📝 Move to Draft')
+						.setIcon('file')
+						.onClick(() => {
+							void this.postWorkflowService.movePostToStatus(file, 'draft');
+						});
+				});
+
+				menu.addItem((item) => {
+					item.setTitle('  ✏️ Move to Editing')
+						.setIcon('edit')
+						.onClick(() => {
+							void this.postWorkflowService.movePostToStatus(file, 'editing');
+						});
+				});
+
+				menu.addItem((item) => {
+					item.setTitle('  📅 Move to Scheduled')
+						.setIcon('calendar')
+						.onClick(() => {
+							void this.postWorkflowService.movePostToStatus(file, 'scheduled');
+						});
+				});
+
+				menu.addItem((item) => {
+					item.setTitle('  ✅ Move to Published')
+						.setIcon('check-circle')
+						.onClick(() => {
+							void this.postWorkflowService.movePostToStatus(file, 'published');
+						});
+				});
+			})
+		);
 	}
 }

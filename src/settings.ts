@@ -223,34 +223,41 @@ tags:
 
 `,
 		posts: `---
-created: {{date_iso}}
-status: draft
+title: "{{title}}"
+date: {{date_iso}}
+excerpt: ""
 tags:
   - blog
-  - post
+author: ""
+status: draft
+created: {{date_iso}}
 ---
-# ✍️ {{title}}
+# {{title}}
 
-## 📝 Ringkasan
+## Ringkasan
+
 > Tulis ringkasan singkat artikel di sini...
 
-## 📖 Konten
+## Konten
 
 ### Pendahuluan
+
 
 
 ### Isi Utama
 
 
+
 ### Kesimpulan
 
 
-## 🏷️ Meta
+
+## Meta
 - **Kategori**:
 - **Target pembaca**:
 - **Kata kunci**:
 
-## 📋 Checklist Publikasi
+## Checklist Publikasi
 - [ ] Judul menarik
 - [ ] Thumbnail/gambar utama
 - [ ] SEO meta description
@@ -472,34 +479,41 @@ tags:
 
 `,
 		posts: `---
-created: {{date_iso}}
-status: draft
+title: "{{title}}"
+date: {{date_iso}}
+excerpt: ""
 tags:
   - blog
-  - post
+author: ""
+status: draft
+created: {{date_iso}}
 ---
-# ✍️ {{title}}
+# {{title}}
 
-## 📝 Summary
+## Summary
+
 > Write a brief summary of the article here...
 
-## 📖 Content
+## Content
 
 ### Introduction
+
 
 
 ### Main Content
 
 
+
 ### Conclusion
 
 
-## 🏷️ Meta
+
+## Meta
 - **Category**:
 - **Target audience**:
 - **Keywords**:
 
-## 📋 Publication Checklist
+## Publication Checklist
 - [ ] Catchy title
 - [ ] Thumbnail/featured image
 - [ ] SEO meta description

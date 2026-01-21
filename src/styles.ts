@@ -691,6 +691,121 @@ const STYLES = `
 	.theme-dark .nulisaja-bottom-sheet {
 		box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
 	}
+
+	/* ========================================
+	   Post Status Bar Styles
+	   ======================================== */
+	.nulisaja-post-status-bar {
+		padding: 12px 16px;
+		background: var(--background-secondary);
+		border-bottom: 1px solid var(--background-modifier-border);
+		position: sticky;
+		top: 0;
+		z-index: 10;
+	}
+
+	.nulisaja-status-bar-inner {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		flex-wrap: wrap;
+	}
+
+	.nulisaja-status-label {
+		font-size: 0.9em;
+		font-weight: 600;
+		color: var(--text-muted);
+	}
+
+	.nulisaja-status-pills {
+		display: flex;
+		align-items: center;
+		gap: 4px;
+		flex-wrap: wrap;
+	}
+
+	.nulisaja-status-pill {
+		display: flex;
+		align-items: center;
+		gap: 4px;
+		padding: 6px 12px;
+		border: 1px solid var(--background-modifier-border);
+		border-radius: 20px;
+		background: var(--background-primary);
+		color: var(--text-muted);
+		font-size: 0.85em;
+		font-weight: 500;
+		cursor: pointer;
+		transition: all 0.2s ease;
+	}
+
+	.nulisaja-status-pill:hover {
+		background: var(--background-modifier-hover);
+		border-color: var(--interactive-accent);
+		color: var(--text-normal);
+	}
+
+	.nulisaja-status-pill.active {
+		background: var(--interactive-accent);
+		border-color: var(--interactive-accent);
+		color: var(--text-on-accent);
+		cursor: default;
+		font-weight: 600;
+	}
+
+	.nulisaja-status-pill.past {
+		background: var(--background-modifier-success);
+		border-color: var(--background-modifier-success);
+		color: var(--text-on-accent);
+		opacity: 0.7;
+	}
+
+	.nulisaja-status-pill .icon {
+		font-size: 1em;
+	}
+
+	.nulisaja-status-pill .label {
+		display: inline;
+	}
+
+	.nulisaja-status-arrow {
+		color: var(--text-muted);
+		font-size: 0.9em;
+		margin: 0 2px;
+	}
+
+	/* Mobile responsive */
+	@media (max-width: 600px) {
+		.nulisaja-post-status-bar {
+			padding: 10px 12px;
+		}
+
+		.nulisaja-status-bar-inner {
+			gap: 8px;
+		}
+
+		.nulisaja-status-label {
+			display: none;
+		}
+
+		.nulisaja-status-pill {
+			padding: 5px 10px;
+			font-size: 0.8em;
+		}
+
+		.nulisaja-status-pill .label {
+			display: none;
+		}
+
+		.nulisaja-status-arrow {
+			font-size: 0.8em;
+		}
+	}
+
+	/* Dark mode */
+	.theme-dark .nulisaja-status-pill.past {
+		background: rgba(var(--color-green-rgb), 0.3);
+	}
 `;
 
 export function injectStyles(): void {
