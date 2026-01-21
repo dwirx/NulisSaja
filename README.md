@@ -1,140 +1,171 @@
-# Nulisaja - Quick Note Creation Plugin
+# NulisSaja
 
-Plugin Obsidian Nulisaja untuk membuat catatan dengan template otomatis dan pengorganisasian folder yang mudah.
+Plugin Obsidian untuk pembuatan catatan cepat dengan sistem PARA, template otomatis, dan UI adaptif.
 
-## Fitur
+![Obsidian](https://img.shields.io/badge/Obsidian-v1.0+-7C3AED?logo=obsidian&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-green.svg)
 
-- 🚀 **Pembuatan Catatan Cepat**: Buat catatan dengan satu klik melalui ribbon atau command palette
-- 📁 **Pengorganisasian Folder**: Otomatis mengorganisir catatan ke folder Knowledge, Ide, atau Notes
-- 📝 **Template Otomatis**: Template yang dapat dikustomisasi untuk setiap jenis catatan
-- 🏷️ **Frontmatter Otomatis**: Tags dan metadata otomatis untuk setiap catatan
-- ⚙️ **Pengaturan Lengkap**: Konfigurasi folder, template, dan preferensi lainnya
-- 🗂️ **Koleksi Template Pribadi**: Simpan beberapa set template per bahasa dan beralih instan
-- 👀 **Pratinjau Langsung**: Lihat contoh hasil template langsung dari halaman pengaturan
-- 📁 **Alias Folder & Template**: Kelola alias agar kompatibel dengan struktur vault yang berbeda
-- 📅 **Format Tanggal Fleksibel**: Atur format tanggal per bahasa untuk template dan nama file
-- ⌨️ **Pengaturan Hotkey**: Tetapkan kombinasi tombol default untuk tiap jenis catatan
+## Fitur Utama
 
-## Cara Menggunakan
+### Quick Menu Adaptif
+- **Desktop**: Command Palette dengan keyboard navigation dan search
+- **Mobile**: Bottom Sheet dengan swipe gestures dan touch-friendly cards
+- **Auto-detect**: Otomatis memilih mode berdasarkan perangkat
 
-### 1. Ribbon Icon
-Klik ikon "file-plus" di ribbon kiri untuk membuka menu cepat pembuatan catatan.
+### 4 Kategori Catatan
+| Kategori | Jenis Catatan |
+|----------|---------------|
+| **Harian** | Daily Note, Journal |
+| **Capture** | Ideas, Catatan Umum |
+| **Knowledge** | Pengetahuan, Zettelkasten |
+| **PARA** | Projects, Areas, Resources |
 
-### 2. Command Palette
-Gunakan Command Palette (Ctrl/Cmd + P) dan cari:
-- "Create Daily Note"
-- "Create Knowledge Note" 
-- "Create Ide Note"
-- "Create General Note"
-- "Create Note with Folder Selection"
+### Template System
+- Template otomatis untuk 9 jenis catatan
+- Koleksi template per bahasa (ID/EN)
+- Format tanggal ISO untuk kompatibilitas Bases plugin
+- Variabel: `{{title}}`, `{{date_iso}}`, `{{date}}`
 
-### 3. Menu Cepat
-Menu cepat menyediakan opsi:
-- 📅 **Daily Note**: Catatan harian dengan template khusus
-- 🧠 **Knowledge Note**: Catatan pengetahuan dengan struktur yang terorganisir
-- 💡 **Ide Note**: Catatan ide dengan template untuk brainstorming
-- 📝 **General Note**: Catatan umum untuk keperluan sehari-hari
-- 📁 **Choose Folder**: Pilih folder tujuan secara manual
-
-## Pengaturan
-
-Buka **Settings → Community plugins → Nulisaja** untuk mengkonfigurasi:
-
-### Folder Settings
-- **Daily folder**: Nama folder untuk catatan harian
-- **Knowledge folder**: Nama folder untuk catatan pengetahuan
-- **Ide folder**: Nama folder untuk catatan ide
-- **Notes folder**: Nama folder untuk catatan umum
-
-### Template Settings
-- **Template collections**: Kelola kumpulan template per bahasa (buat, duplikasi, hapus)
-- **Template aliases**: Simpan variasi template dan terapkan sekali klik
-- **Daily template**: Template untuk catatan harian
-- **Knowledge template**: Template untuk catatan pengetahuan
-- **Ide template**: Template untuk catatan ide
-- **Notes template**: Template untuk catatan umum
-
-### General Settings
-- **Template language**: Pilih template bawaan dalam Bahasa Indonesia atau English
-- **Date formats**: Atur format tanggal per bahasa (token: YYYY, MMM, DD, dll)
-- **Auto create folders**: Otomatis membuat folder jika belum ada
-- **Default folder**: Folder default untuk catatan baru
-- **Include tags**: Otomatis menyertakan tags dalam frontmatter
-- **Hotkey defaults**: Tetapkan kombinasi tombol command secara global
-
-## Template Default
-
-### Daily Note
-```markdown
----
-tags:
-  - daily
----
-## Notes
-
-```
-
-### Knowledge Note
-```markdown
----
-created: 2025-01-23
-tags:
-  - note
-  - journal
----
-
-```
-
-### Ide Note
-```markdown
----
-created: 2025-01-23
-tags:
-  - note
-  - journal
----
-
-```
-
-### General Note
-```markdown
----
-created: 2025-01-23
-tags:
-  - note
-  - journal
----
-
-```
-
-## Format Nama File
-
-Plugin akan otomatis membuat nama file dengan format tanggal di depan:
-
-- **Daily Note**: `2025-01-23.md`
-- **Knowledge/Ide/Notes**: `2025-01-23 nama-judul.md`
-
-Contoh: Jika Anda membuat catatan dengan judul "Cinta dan Benci", nama filenya akan menjadi `2025-01-23 cinta-dan-benci.md`
+### Pengaturan Lengkap
+- Visibility toggle per item menu
+- Kustomisasi folder dan template
+- Format tanggal fleksibel
+- Hotkey per jenis catatan
 
 ## Instalasi
 
-1. Download file `main.js`, `manifest.json`, dan `styles.css`
-2. Copy ke folder plugin: `<Vault>/.obsidian/plugins/nulisaja/`
-3. Reload Obsidian dan aktifkan plugin di **Settings → Community plugins**
-
-## Pengembangan
-
+### Manual
 ```bash
+# Clone repository
+git clone https://github.com/dwirx/NulisSaja.git
+
+# Masuk ke folder
+cd NulisSaja
+
 # Install dependencies
 npm install
 
-# Development mode
-npm run dev
-
-# Production build
+# Build
 npm run build
 ```
 
-## Lisensi
+Copy `main.js`, `manifest.json`, dan `styles.css` ke:
+```
+<Vault>/.obsidian/plugins/nulisaja/
+```
 
-MIT License
+### Dari Obsidian
+1. Settings → Community Plugins → Browse
+2. Cari "NulisSaja"
+3. Install dan Enable
+
+## Penggunaan
+
+### Quick Menu
+- **Ribbon**: Klik ikon pen di sidebar kiri
+- **Command**: `Ctrl/Cmd + P` → "Nulisaja: Open Quick Menu"
+- **Hotkey**: Atur di Settings
+
+### Keyboard Shortcuts (Desktop)
+| Key | Action |
+|-----|--------|
+| `↑` `↓` | Navigasi item |
+| `Enter` | Pilih item |
+| `Esc` | Tutup menu |
+| `Type` | Filter/search |
+
+### Gestures (Mobile)
+- **Tap**: Pilih item
+- **Swipe down**: Tutup menu
+
+## Konfigurasi
+
+Settings → Community Plugins → NulisSaja
+
+### Quick Menu
+- **Mode**: Auto / Command Palette / Bottom Sheet
+- **Visibility**: Toggle tampilan per item
+
+### Folders
+```
+Daily/       → Catatan harian
+Knowledge/   → Pengetahuan
+Ide/         → Brainstorming
+Notes/       → Catatan umum
+PROJECTS/    → Proyek aktif
+AREAS/       → Area tanggung jawab
+RESOURCES/   → Referensi
+IDEAS/       → Zettelkasten
+journal/     → Jurnal pribadi
+```
+
+### Templates
+Gunakan variabel:
+- `{{title}}` - Judul catatan
+- `{{date_iso}}` - Tanggal ISO (2026-01-21)
+- `{{date}}` - Tanggal format lokal
+
+## Development
+
+```bash
+# Install
+npm install
+
+# Dev mode (watch)
+npm run dev
+
+# Build production
+npm run build
+
+# Type check
+npx tsc --noEmit
+```
+
+## Struktur Project
+
+```
+src/
+├── main.ts              # Entry point
+├── types.ts             # Type definitions
+├── settings.ts          # Default settings
+├── settingsTab.ts       # Settings UI
+├── styles.ts            # CSS styles
+├── commands/
+│   ├── noteDefinitions.ts
+│   ├── noteRunner.ts
+│   └── registerCommands.ts
+├── services/
+│   └── noteService.ts   # Note creation logic
+├── ui/
+│   ├── quickMenu/
+│   │   ├── index.ts
+│   │   ├── types.ts
+│   │   ├── utils.ts
+│   │   ├── commandPalette.ts
+│   │   └── bottomSheet.ts
+│   └── titlePrompt.ts
+└── utils/
+    └── date.ts
+```
+
+## Changelog
+
+### v1.1.0
+- Dual-mode Quick Menu (Command Palette + Bottom Sheet)
+- 4 kategori dengan grouping visual
+- Visibility settings per item
+- Fix date format untuk Bases plugin compatibility
+
+### v1.0.0
+- Initial release
+- 9 jenis catatan dengan template
+- Multi-language support (ID/EN)
+- Template collections
+
+## License
+
+MIT License - Lihat [LICENSE](LICENSE) untuk detail.
+
+## Author
+
+**dwirx** - [GitHub](https://github.com/dwirx)

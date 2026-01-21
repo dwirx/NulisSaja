@@ -1,7 +1,8 @@
 import { Notice } from 'obsidian';
 import type { NoteCommandDefinition, NotePlugin } from '../types';
 import { promptForTitle } from '../ui/titlePrompt';
-import type { QuickMenuAction } from '../ui/quickMenu';
+import type { LegacyQuickMenuAction, QuickMenuItem } from '../ui/quickMenu/index';
+import { NOTE_TYPE_TO_CATEGORY } from '../ui/quickMenu/index';
 import { NoteService } from '../services/noteService';
 
 export async function runNoteAction(
@@ -40,11 +41,37 @@ export async function runNoteAction(
 	}
 }
 
+/**
+ * Create QuickMenuItem array for new adaptive Quick Menu
+ */
+export function createQuickMenuItems(
+	plugin: NotePlugin,
+	noteService: NoteService,
+	definitions: NoteCommandDefinition[]
+): QuickMenuItem[] {
+	return definitions.map((definition, index) => ({
+		id: definition.commandId,
+		noteType: definition.type,
+		label: definition.menuLabel,
+		description: definition.menuDescription,
+		icon: definition.icon,
+		categoryId: NOTE_TYPE_TO_CATEGORY[definition.type] || 'capture',
+		visible: true,
+		order: index,
+		handler: () => {
+			void runNoteAction(plugin, noteService, definition);
+		}
+	}));
+}
+
+/**
+ * Legacy: Create old QuickMenuAction array for backwards compatibility
+ */
 export function createQuickMenuActions(
 	plugin: NotePlugin,
 	noteService: NoteService,
 	definitions: NoteCommandDefinition[]
-): QuickMenuAction[] {
+): LegacyQuickMenuAction[] {
 	return definitions.map((definition) => ({
 		icon: definition.icon,
 		label: definition.menuLabel,

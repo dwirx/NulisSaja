@@ -43,6 +43,9 @@ export interface NulisajaPluginSettings {
 	templateAliases: Record<NoteType, TemplateAlias[]>;
 	dateFormats: Record<TemplateLanguage, string>;
 	hotkeys: Partial<Record<NoteType, string>>;
+	// Quick Menu settings
+	quickMenuMode?: 'auto' | 'command-palette' | 'bottom-sheet';
+	quickMenuVisibility?: Record<string, boolean>;
 }
 
 export interface NotePlugin extends Plugin {

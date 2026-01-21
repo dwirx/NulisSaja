@@ -13,6 +13,8 @@ import { NOTE_DEFINITIONS } from './commands/noteDefinitions';
 import { createTemplateCollection, getDefaultTemplates } from './settings';
 import { formatDate, formatIsoDate } from './utils/date';
 import { promptForTitle } from './ui/titlePrompt';
+import { DEFAULT_CATEGORIES, NOTE_TYPE_TO_CATEGORY } from './ui/quickMenu/index';
+import type { QuickMenuCategory } from './ui/quickMenu/index';
 import type { NoteType, SettingsPlugin, TemplateAlias, TemplateLanguage } from './types';
 
 interface FolderField {
@@ -222,6 +224,7 @@ export class NulisajaSettingTab extends PluginSettingTab {
 
 		this.renderFolderSettings(containerEl);
 		this.renderTemplateSettings(containerEl);
+		this.renderQuickMenuSettings(containerEl);
 		this.renderGeneralSettings(containerEl);
 	}
 
@@ -261,6 +264,68 @@ export class NulisajaSettingTab extends PluginSettingTab {
 
 				this.renderTemplatePreview(templateSetting.settingEl, item.key);
 				this.renderTemplateAliasControls(containerEl, item.key);
+			});
+		});
+	}
+
+	private renderQuickMenuSettings(containerEl: HTMLElement): void {
+		containerEl.createEl('h2', { text: '🎯 Quick Menu Settings' });
+
+		const language = this.currentLanguage;
+
+		// Mode setting
+		new Setting(containerEl)
+			.setName(language === 'id' ? '📱 Mode tampilan' : '📱 Display mode')
+			.setDesc(
+				language === 'id'
+					? 'Pilih gaya menu: Auto (desktop: command palette, mobile: bottom sheet), atau paksa salah satu mode.'
+					: 'Choose menu style: Auto (desktop: command palette, mobile: bottom sheet), or force one mode.'
+			)
+			.addDropdown((dropdown: DropdownComponent) => {
+				dropdown.addOption('auto', language === 'id' ? 'Auto (Rekomendasi)' : 'Auto (Recommended)');
+				dropdown.addOption('command-palette', 'Command Palette (Desktop)');
+				dropdown.addOption('bottom-sheet', 'Bottom Sheet (Mobile)');
+				dropdown.setValue(this.plugin.settings.quickMenuMode ?? 'auto');
+				dropdown.onChange(async (value) => {
+					this.plugin.settings.quickMenuMode = value as 'auto' | 'command-palette' | 'bottom-sheet';
+					await this.plugin.saveSettings();
+				});
+			});
+
+		// Quick Menu item visibility
+		containerEl.createEl('h3', {
+			text: language === 'id' ? '👁 Visibilitas item' : '👁 Item visibility'
+		});
+
+		const categories = DEFAULT_CATEGORIES;
+
+		categories.forEach((category) => {
+			containerEl.createEl('h4', {
+				text: `${category.icon} ${category.name}`
+			});
+
+			// Get note types for this category
+			const noteTypesInCategory = NOTE_DEFINITIONS.filter(
+				(def) => NOTE_TYPE_TO_CATEGORY[def.type] === category.id
+			);
+
+			noteTypesInCategory.forEach((definition) => {
+				const itemId = definition.commandId;
+				const isVisible = this.plugin.settings.quickMenuVisibility?.[itemId] !== false;
+
+				new Setting(containerEl)
+					.setName(`${definition.icon} ${definition.menuLabel}`)
+					.setDesc(definition.menuDescription)
+					.addToggle((toggle: ToggleComponent) => {
+						toggle.setValue(isVisible);
+						toggle.onChange(async (value) => {
+							if (!this.plugin.settings.quickMenuVisibility) {
+								this.plugin.settings.quickMenuVisibility = {};
+							}
+							this.plugin.settings.quickMenuVisibility[itemId] = value;
+							await this.plugin.saveSettings();
+						});
+					});
 			});
 		});
 	}

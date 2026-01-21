@@ -21,7 +21,7 @@ tags:
 
 `,
 		knowledge: `---
-created: {{date}}
+created: {{date_iso}}
 tags:
   - knowledge
   - learning
@@ -42,7 +42,7 @@ tags:
 
 `,
 		ide: `---
-created: {{date}}
+created: {{date_iso}}
 tags:
   - idea
   - brainstorming
@@ -63,7 +63,7 @@ tags:
 
 `,
 		notes: `---
-created: {{date}}
+created: {{date_iso}}
 tags:
   - note
 ---
@@ -80,7 +80,7 @@ tags:
 
 `,
 		projects: `---
-created: {{date}}
+created: {{date_iso}}
 tags:
   - project
   - active
@@ -111,7 +111,7 @@ tags:
 
 `,
 		areas: `---
-created: {{date}}
+created: {{date_iso}}
 tags:
   - area
   - responsibility
@@ -138,7 +138,7 @@ tags:
 
 `,
 		resources: `---
-created: {{date}}
+created: {{date_iso}}
 tags:
   - resource
   - reference
@@ -167,7 +167,7 @@ tags:
 
 `,
 		ideas: `---
-created: {{date}}
+created: {{date_iso}}
 tags:
   - idea
   - atomic
@@ -194,7 +194,7 @@ tags:
 
 `,
 		journal: `---
-created: {{date}}
+created: {{date_iso}}
 tags:
   - journal
   - personal
@@ -234,7 +234,7 @@ tags:
 
 `,
 		knowledge: `---
-created: {{date}}
+created: {{date_iso}}
 tags:
   - knowledge
   - learning
@@ -255,7 +255,7 @@ tags:
 
 `,
 		ide: `---
-created: {{date}}
+created: {{date_iso}}
 tags:
   - idea
   - brainstorming
@@ -276,7 +276,7 @@ tags:
 
 `,
 		notes: `---
-created: {{date}}
+created: {{date_iso}}
 tags:
   - note
 ---
@@ -293,7 +293,7 @@ tags:
 
 `,
 		projects: `---
-created: {{date}}
+created: {{date_iso}}
 tags:
   - project
   - active
@@ -324,7 +324,7 @@ tags:
 
 `,
 		areas: `---
-created: {{date}}
+created: {{date_iso}}
 tags:
   - area
   - responsibility
@@ -351,7 +351,7 @@ tags:
 
 `,
 		resources: `---
-created: {{date}}
+created: {{date_iso}}
 tags:
   - resource
   - reference
@@ -380,7 +380,7 @@ tags:
 
 `,
 		ideas: `---
-created: {{date}}
+created: {{date_iso}}
 tags:
   - idea
   - atomic
@@ -407,7 +407,7 @@ tags:
 
 `,
 		journal: `---
-created: {{date}}
+created: {{date_iso}}
 tags:
   - journal
   - personal
